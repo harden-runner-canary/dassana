@@ -18,7 +18,7 @@
     <packaging>jar</packaging>
     <jdk.version>11</jdk.version>
     <release.version>11</release.version>
-    <aws-sdk-version>2.17.56</aws-sdk-version>
+    <aws-sdk-version>2.17.88</aws-sdk-version>
   </properties>
 
   <repositories>
