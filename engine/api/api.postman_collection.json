@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f583daec-ac67-4325-9b63-dcb71fec6c24",
+		"_postman_id": "839f8b7e-d61c-4499-913f-6c789dfbbd45",
 		"name": "Dassana API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -321,6 +321,150 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete custom workflow",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15"
+							},
+							{
+								"key": "Content-Length",
+								"value": "0"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false"
+							},
+							{
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg"
+							}
+						],
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?workflowId=demo-cloud-resource-context",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "workflowId",
+									"value": "demo-cloud-resource-context"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update workflow",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-yaml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/"
+							},
+							{
+								"key": "Content-Length",
+								"value": "1619"
+							},
+							{
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "# This is just a SAMPLE file\n\n# general context workflows such as this one are executed only after normalization has been done\n# all of the fields such as csp,service etc emitted by normalization workflow are available.\n\nschema: 1\ntype: general-context\n\nid: general-context-demo-cloud\nname: for demo cloud, risk of \"demo-service\" is low\n\ncsp: demo-cloud # note that this value is not used by engine for filtering.\n#currently, it is being used to rendering content on https://contexthub.dassana.io/\n\nfilters:\n  - match-type: all\n    rules:\n      - .csp == \"demo-csp\" and .service == \"demo-service\"\n\n#this workflow being a demo workflow doesn't have steps. In general, you will have steps that take the input and output something meaningful\n#for example, refer to https://github.com/dassana-io/dassana/blob/main/content/workflows/csp/aws/general-context/general-context.yaml\n\nrisk-config:\n  default-risk: \"\" # we recommend that you set the default risk to be empty\n  rules:\n    - id: low-risk-for-demo-service-in-real-world-you-will-refer-to-steps-output\n      condition: .service | contains (\"demo-service\") # jq expression which must return a true or false output\n      risk: low # valid values are low, medium, high and critical\n\noutput:\n  - name: why-is-6-afraid-of-7\n    value: \"because 7 ate 9\"\n    value-type: STRING # the field value-type is optional with the default value of JQ. This is a demo workflow so we are not extracting anyting from steps using jq, so we are using STRING which simply puts the value in the JSON key\n  - name: test-output\n    value: \"I don't know what is going on\"\n    value-type: STRING"
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?includeInputRequest=false",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -395,6 +539,1146 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Cross-account role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//The following test asserts whether Dassana was able to grab context from a cross-account bucket",
+									"pm.test(\"Bucket has associated website\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"dassana-bucket-with-website.s3-website-us-west-1.amazonaws.com\");",
+									"});",
+									"",
+									"// In the future, we'd like to add a test on context using cloudwatch metrics to test whether the extra permission was added correctly",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"SchemaVersion\": \"2018-10-08\",\n  \"Id\": \"arn:aws:securityhub:us-west-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/S3.2/finding/b78c0b5a-4500-407a-b591-1c6c0dccde9d\",\n  \"ProductArn\": \"arn:aws:securityhub:us-west-1::product/aws/securityhub\",\n  \"ProductName\": \"Security Hub\",\n  \"CompanyName\": \"AWS\",\n  \"Region\": \"us-west-1\",\n  \"GeneratorId\": \"aws-foundational-security-best-practices/v/1.0.0/S3.2\",\n  \"AwsAccountId\": \"536600094836\",\n  \"Types\": [\n    \"Effects/Data Exposure/AWS-Foundational-Security-Best-Practices\"\n  ],\n  \"FirstObservedAt\": \"2021-10-05T21:00:36.991Z\",\n  \"LastObservedAt\": \"2021-10-05T21:00:40.906Z\",\n  \"CreatedAt\": \"2021-10-05T21:00:36.991Z\",\n  \"UpdatedAt\": \"2021-10-05T21:00:36.991Z\",\n  \"Severity\": {\n    \"Product\": 90,\n    \"Label\": \"CRITICAL\",\n    \"Normalized\": 90,\n    \"Original\": \"CRITICAL\"\n  },\n  \"Title\": \"S3.2 S3 buckets should prohibit public read access\",\n  \"Description\": \"This AWS control checks whether your S3 buckets allow public read access by evaluating the Block Public Access settings, the bucket policy, and the bucket access control list (ACL).\",\n  \"Remediation\": {\n    \"Recommendation\": {\n      \"Text\": \"For directions on how to fix this issue, consult the AWS Security Hub Foundational Security Best Practices documentation.\",\n      \"Url\": \"https://docs.aws.amazon.com/console/securityhub/S3.2/remediation\"\n    }\n  },\n  \"ProductFields\": {\n    \"StandardsArn\": \"arn:aws:securityhub:::standards/aws-foundational-security-best-practices/v/1.0.0\",\n    \"StandardsSubscriptionArn\": \"arn:aws:securityhub:us-west-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0\",\n    \"ControlId\": \"S3.2\",\n    \"RecommendationUrl\": \"https://docs.aws.amazon.com/console/securityhub/S3.2/remediation\",\n    \"RelatedAWSResources:0/name\": \"securityhub-s3-bucket-public-read-prohibited-8a52d554\",\n    \"RelatedAWSResources:0/type\": \"AWS::Config::ConfigRule\",\n    \"StandardsControlArn\": \"arn:aws:securityhub:us-west-1:536600094836:control/aws-foundational-security-best-practices/v/1.0.0/S3.2\",\n    \"aws/securityhub/ProductName\": \"Security Hub\",\n    \"aws/securityhub/CompanyName\": \"AWS\",\n    \"aws/securityhub/annotation\": \"The S3 bucket policy allows public read access.\",\n    \"Resources:0/Id\": \"arn:aws:s3:::dassana-bucket-with-website\",\n    \"aws/securityhub/FindingId\": \"arn:aws:securityhub:us-west-1::product/aws/securityhub/arn:aws:securityhub:us-west-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/S3.2/finding/b78c0b5a-4500-407a-b591-1c6c0dccde9d\"\n  },\n  \"Resources\": [\n    {\n      \"Type\": \"AwsS3Bucket\",\n      \"Id\": \"arn:aws:s3:::dassana-bucket-with-website\",\n      \"Partition\": \"aws\",\n      \"Region\": \"us-west-1\",\n      \"Details\": {\n        \"AwsS3Bucket\": {\n          \"OwnerId\": \"e358b1b3d851d3086189a3836f73e8f16a4f9828702564be894412ae7bc4e03c\",\n          \"CreatedAt\": \"2021-10-05T20:49:47.000Z\"\n        }\n      }\n    }\n  ],\n  \"Compliance\": {\n    \"Status\": \"FAILED\"\n  },\n  \"WorkflowState\": \"NEW\",\n  \"Workflow\": {\n    \"Status\": \"NEW\"\n  },\n  \"RecordState\": \"ACTIVE\",\n  \"FindingProviderFields\": {\n    \"Severity\": {\n      \"Label\": \"CRITICAL\",\n      \"Original\": \"CRITICAL\"\n    },\n    \"Types\": [\n      \"Effects/Data Exposure/AWS-Foundational-Security-Best-Practices\"\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Guard Duty Brute Force EC2 Alert",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const alertClassification = pm.response.json().dassana.normalize.output.alertClassification;",
+									"pm.test(\"Alert classified correctly\", function() {",
+									"    pm.expect(alertClassification.subclass).to.eql(\"credential-access\");",
+									"    pm.expect(alertClassification.category).to.eql(\"brute-force\");",
+									"    pm.expect(alertClassification.subcategory).to.eql(\"\");",
+									"    pm.expect(alertClassification.class).to.eql(\"incident\");",
+									"})",
+									"",
+									"const generalRisk = pm.response.json().dassana[\"general-context\"][\"risk\"]",
+									"pm.test(\"General context risk is correct\", function() {",
+									"    pm.expect(generalRisk.riskValue).to.eql(\"\");",
+									"})",
+									"",
+									"const resourceOutput = pm.response.json().dassana[\"resource-context\"][\"step-output\"]",
+									"pm.test(\"EC2 exposure action is working\", function() {",
+									"    pm.expect(resourceOutput[0].ec2Exposure.direct.isExposed).to.eql(false);",
+									"})",
+									"",
+									"pm.test(\"EC2 role arn action is working\", function() {",
+									"    pm.expect(resourceOutput[1].iamRole.result.roleArn).to.eql(\"arn:aws:iam::536600094836:role/brute-force-myself-RedTeamInstanceProfile-KWWIIXHUFRXP\");",
+									"})",
+									"",
+									"const results = resourceOutput[2].riskyPermissions.result;",
+									"pm.test(\"EC2 cloudsplaining action is working\", function() {",
+									"    pm.expect(results.ResourceExposure.length).to.eql(0);",
+									"    pm.expect(results.PrivilegeEscalation.length).to.eql(0);",
+									"    pm.expect(results.DataExfiltration.length).to.eql(0);",
+									"    pm.expect(results.CredentialsExposure.length).to.eql(0);",
+									"    pm.expect(results.InfrastructureModification.length).to.eql(0);",
+									"    pm.expect(results.ServicesAffected.length).to.eql(0);",
+									"    pm.expect(results.ServiceWildcard.length).to.eql(0);",
+									"})",
+									"",
+									"const resourceRisk = pm.response.json().dassana[\"resource-context\"].risk",
+									"pm.test(\"Resource risk is correct\", function() {",
+									"    // TODO: Subrules need to be tested with a resource that has isExposed is set to true",
+									"    pm.expect(resourceRisk.riskValue).to.eql(\"\");",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json;charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"SchemaVersion\": \"2018-10-08\",\n  \"Id\": \"arn:aws:guardduty:us-east-1:536600094836:detector/32bdf62ba5e6fac9eaf4567cb6c8b996/finding/a6bebcb77454af6f739f80767b2494b8\",\n  \"ProductArn\": \"arn:aws:securityhub:us-east-1::product/aws/guardduty\",\n  \"ProductName\": \"GuardDuty\",\n  \"CompanyName\": \"Amazon\",\n  \"Region\": \"us-east-1\",\n  \"GeneratorId\": \"arn:aws:guardduty:us-east-1:536600094836:detector/32bdf62ba5e6fac9eaf4567cb6c8b996\",\n  \"AwsAccountId\": \"536600094836\",\n  \"Types\": [\n    \"TTPs/Initial Access/UnauthorizedAccess:EC2-SSHBruteForce\"\n  ],\n  \"FirstObservedAt\": \"2021-12-02T04:24:54.000Z\",\n  \"LastObservedAt\": \"2021-12-02T04:28:53.000Z\",\n  \"CreatedAt\": \"2021-12-02T04:37:31.433Z\",\n  \"UpdatedAt\": \"2021-12-02T04:37:31.433Z\",\n  \"Severity\": {\n    \"Product\": 8,\n    \"Label\": \"HIGH\",\n    \"Normalized\": 40\n  },\n  \"Title\": \"i-0c1c3bd02914d74a7 is performing SSH brute force attacks against 172.16.0.30.\",\n  \"Description\": \"i-0c1c3bd02914d74a7 is performing SSH brute force attacks against 172.16.0.30. Brute force attacks are used to gain unauthorized access to your instance by guessing the SSH password.\",\n  \"SourceUrl\": \"https://us-east-1.console.aws.amazon.com/guardduty/home?region=us-east-1#/findings?macros=current&fId=a6bebcb77454af6f739f80767b2494b8\",\n  \"ProductFields\": {\n    \"aws/guardduty/service/action/networkConnectionAction/remotePortDetails/portName\": \"SSH\",\n    \"aws/guardduty/service/archived\": \"false\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/organization/asnOrg\": \"\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/geoLocation/lat\": \"0.0\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/ipAddressV4\": \"172.16.0.30\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/geoLocation/lon\": \"0.0\",\n    \"aws/guardduty/service/action/networkConnectionAction/blocked\": \"false\",\n    \"aws/guardduty/service/action/networkConnectionAction/remotePortDetails/port\": \"22\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/country/countryName\": \"\",\n    \"aws/guardduty/service/serviceName\": \"guardduty\",\n    \"aws/guardduty/service/evidence\": \"\",\n    \"aws/guardduty/service/action/networkConnectionAction/localIpDetails/ipAddressV4\": \"172.16.0.27\",\n    \"aws/guardduty/service/detectorId\": \"32bdf62ba5e6fac9eaf4567cb6c8b996\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/organization/org\": \"\",\n    \"aws/guardduty/service/action/networkConnectionAction/connectionDirection\": \"OUTBOUND\",\n    \"aws/guardduty/service/eventFirstSeen\": \"2021-12-02T04:24:54.000Z\",\n    \"aws/guardduty/service/eventLastSeen\": \"2021-12-02T04:28:53.000Z\",\n    \"aws/guardduty/service/action/networkConnectionAction/localPortDetails/portName\": \"Unknown\",\n    \"aws/guardduty/service/action/actionType\": \"NETWORK_CONNECTION\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/city/cityName\": \"\",\n    \"aws/guardduty/service/additionalInfo\": \"\",\n    \"aws/guardduty/service/resourceRole\": \"ACTOR\",\n    \"aws/guardduty/service/action/networkConnectionAction/localPortDetails/port\": \"32770\",\n    \"aws/guardduty/service/action/networkConnectionAction/protocol\": \"TCP\",\n    \"aws/guardduty/service/count\": \"1\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/organization/asn\": \"0\",\n    \"aws/guardduty/service/action/networkConnectionAction/remoteIpDetails/organization/isp\": \"\",\n    \"aws/securityhub/FindingId\": \"arn:aws:securityhub:us-east-1::product/aws/guardduty/arn:aws:guardduty:us-east-1:536600094836:detector/32bdf62ba5e6fac9eaf4567cb6c8b996/finding/a6bebcb77454af6f739f80767b2494b8\",\n    \"aws/securityhub/ProductName\": \"GuardDuty\",\n    \"aws/securityhub/CompanyName\": \"Amazon\"\n  },\n  \"Resources\": [\n    {\n      \"Type\": \"AwsEc2Instance\",\n      \"Id\": \"arn:aws:ec2:us-east-1:536600094836:instance/i-0c1c3bd02914d74a7\",\n      \"Partition\": \"aws\",\n      \"Region\": \"us-east-1\",\n      \"Tags\": {\n        \"aws:cloudformation:stack-name\": \"brute-force-myself\",\n        \"CreatedBy\": \"GuardDuty Test Script\",\n        \"aws:cloudformation:stack-id\": \"arn:aws:cloudformation:us-east-1:536600094836:stack/brute-force-myself/cfc3efb0-5326-11ec-ab4d-12b852056fdd\",\n        \"aws:cloudformation:logical-id\": \"RedTeam\",\n        \"Name\": \"RedTeam\"\n      },\n      \"Details\": {\n        \"AwsEc2Instance\": {\n          \"Type\": \"t2.micro\",\n          \"ImageId\": \"ami-04ad2567c9e3d7893\",\n          \"IpV4Addresses\": [\n            \"172.16.0.27\"\n          ],\n          \"IamInstanceProfileArn\": \"arn:aws:iam::536600094836:instance-profile/brute-force-myself-RedTeamInstanceProfile-KWWIIXHUFRXP\",\n          \"VpcId\": \"vpc-0058fb8dcb870d2cc\",\n          \"SubnetId\": \"subnet-0aae65beeaac46b4c\",\n          \"LaunchedAt\": \"2021-12-02T04:20:59.000Z\"\n        }\n      }\n    }\n  ],\n  \"WorkflowState\": \"NEW\",\n  \"Workflow\": {\n    \"Status\": \"NEW\"\n  },\n  \"RecordState\": \"ACTIVE\",\n  \"FindingProviderFields\": {\n    \"Severity\": {\n      \"Label\": \"HIGH\"\n    },\n    \"Types\": [\n      \"TTPs/Initial Access/UnauthorizedAccess:EC2-SSHBruteForce\"\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Prisma S3 Bucket with Static Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const alertClassification = pm.response.json().dassana.normalize.output.alertClassification;\r",
+									"pm.test(\"Alert classified correctly\", function() {\r",
+									"    pm.expect(alertClassification.subclass).to.eql(\"config\");\r",
+									"    pm.expect(alertClassification.category).to.eql(\"iam\");\r",
+									"    pm.expect(alertClassification.subcategory).to.eql(\"public-access\");\r",
+									"    pm.expect(alertClassification.class).to.eql(\"risk\");\r",
+									"})\r",
+									"\r",
+									"const stepOutput = pm.response.json().dassana[\"resource-context\"][\"step-output\"]\r",
+									"pm.test(\"Bucket policy action works as expected\", function() {\r",
+									"    pm.expect(stepOutput[1].bucketPolicy).to.have.all.keys('result');\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Website context action retrieves website url\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"dassana-bucket-with-website.s3-website-us-west-1.amazonaws.com\");\r",
+									"});\r",
+									"\r",
+									"const generalRisk = pm.response.json().dassana[\"general-context\"][\"risk\"]\r",
+									"pm.test(\"General context risk is correct\", function() {\r",
+									"    pm.expect(generalRisk.riskValue).to.eql(\"high\");\r",
+									"})\r",
+									"\r",
+									"const resourceRisk = pm.response.json().dassana[\"resource-context\"][\"risk\"]\r",
+									"pm.test(\"Resource context risk is correct\", function() {\r",
+									"    pm.expect(resourceRisk.riskValue).to.eql(\"\");\r",
+									"})\r",
+									"\r",
+									"const policyRisk = pm.response.json().dassana[\"policy-context\"][\"risk\"]\r",
+									"pm.test(\"Policy context risk is correct\", function() {\r",
+									"    pm.expect(policyRisk.riskValue).to.eql(\"low\");\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"alertStatus\": \"open\",\r\n  \"reason\": \"SCHEDULED\",\r\n  \"resourceId\": \"dassana-bucket-with-website\",\r\n  \"alertRuleName\": \"PC to Dassana to Splunk\",\r\n  \"alertRemediationImpact\": null,\r\n  \"accountName\": \"P Personal\",\r\n  \"hasFinding\": false,\r\n  \"resourceRegionId\": \"us-west-1\",\r\n  \"alertRemediationCli\": null,\r\n  \"source\": \"Prisma Cloud\",\r\n  \"cloudType\": \"aws\",\r\n  \"complianceMetadata\": [\r\n    {\r\n      \"requirementName\": \"Collection\",\r\n      \"standardName\": \"MITRE ATT&CK v6.3\",\r\n      \"requirementId\": \"TA0009\"\r\n    },\r\n    {\r\n      \"requirementName\": \"Principle 1 - Accountability\",\r\n      \"standardName\": \"PIPEDA\",\r\n      \"requirementId\": \"4.1\"\r\n    },\r\n    {\r\n      \"requirementName\": \"Technology Operations Management\",\r\n      \"standardName\": \"Risk Management in Technology (RMiT)\",\r\n      \"requirementId\": \"10\"\r\n    },\r\n    {\r\n      \"requirementName\": \"California Civil Code Section 1798.150\",\r\n      \"standardName\": \"CCPA 2018\",\r\n      \"requirementId\": \"1798.150\"\r\n    },\r\n    {\r\n      \"requirementName\": \"ACCESS CONTROL\",\r\n      \"standardName\": \"NIST 800-53 Rev 5\",\r\n      \"requirementId\": \"AC\"\r\n    }\r\n  ],\r\n  \"callbackUrl\": \"https://app2.prismacloud.io/alerts/overview?filters#alert.id[0]=P-1695&timeRange[type]=to_now&timeRange[value]=epoch\",\r\n  \"alertId\": \"P-1695\",\r\n  \"policyLabels\": [],\r\n  \"alertAttribution\": {},\r\n  \"severity\": \"high\",\r\n  \"policyName\": \"AWS S3 Bucket has Global GET Permissions enabled via bucket policy\",\r\n  \"resource\": {\r\n    \"data\": {\r\n      \"owner\": {\r\n        \"displayName\": \"gk+parthaws\",\r\n        \"id\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\"\r\n      },\r\n      \"tags\": [\r\n        {\r\n          \"value\": \"prod\",\r\n          \"key\": \"env\"\r\n        }\r\n      ],\r\n      \"bucketName\": \"dassana-bucket-with-website\",\r\n      \"denyUnencryptedUploadsPolicies\": [],\r\n      \"accountLevelPublicAccessBlockConfiguration\": {\r\n        \"blockPublicPolicy\": false,\r\n        \"restrictPublicBuckets\": false,\r\n        \"blockPublicAcls\": false,\r\n        \"ignorePublicAcls\": false\r\n      },\r\n      \"acl\": {\r\n        \"owner\": {\r\n          \"displayName\": \"gk+parthaws\",\r\n          \"id\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\"\r\n        },\r\n        \"grants\": [\r\n          {\r\n            \"grantee\": {\r\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\r\n              \"displayName\": \"gk+parthaws\",\r\n              \"typeIdentifier\": \"id\"\r\n            },\r\n            \"permission\": \"FullControl\"\r\n          }\r\n        ],\r\n        \"grantsAsList\": [\r\n          {\r\n            \"grantee\": {\r\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\r\n              \"displayName\": \"gk+parthaws\",\r\n              \"typeIdentifier\": \"id\"\r\n            },\r\n            \"permission\": \"FullControl\"\r\n          }\r\n        ],\r\n        \"requesterCharged\": false\r\n      },\r\n      \"creationDate\": \"2021-08-26T17:20:25.000Z\",\r\n      \"policyStatus\": {\r\n        \"isPublic\": true\r\n      },\r\n      \"sseAlgorithm\": \"None\",\r\n      \"loggingConfiguration\": {\r\n        \"targetGrants\": [\r\n          {\r\n            \"grantee\": {\r\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\r\n              \"displayName\": \"gk+parthaws\",\r\n              \"typeIdentifier\": \"id\"\r\n            },\r\n            \"permission\": \"FullControl\"\r\n          }\r\n        ]\r\n      },\r\n      \"policyAvailable\": true,\r\n      \"accountId\": \"536600094836\",\r\n      \"websiteConfiguration\": {\r\n        \"indexDocumentSuffix\": \"index.html\",\r\n        \"routingRules\": []\r\n      },\r\n      \"versioningConfiguration\": {\r\n        \"status\": \"Off\"\r\n      },\r\n      \"kmsMasterKeyID\": \"None\",\r\n      \"policy\": {\r\n        \"Version\": \"2012-10-17\",\r\n        \"Statement\": [\r\n          {\r\n            \"Action\": [\r\n              \"s3:GetObject\",\r\n              \"s3:GetObjectVersion\"\r\n            ],\r\n            \"Resource\": \"arn:aws:s3:::dassana-blog-static-site/*\",\r\n            \"Effect\": \"Allow\",\r\n            \"Principal\": \"*\",\r\n            \"Sid\": \"PublicRead\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"resourceTs\": 1631758402352,\r\n    \"url\": \"https://console.aws.amazon.com/s3/buckets/dassana-blog-static-site/?region=us-east-1#\",\r\n    \"rrn\": \"rrn::storageBucket:us-east-1:461092258297::dassana-blog-static-site\",\r\n    \"cloudAccountGroups\": [\r\n      \"Test\"\r\n    ],\r\n    \"accountId\": \"536600094836\",\r\n    \"resourceTags\": {\r\n      \"env\": \"dev\"\r\n    },\r\n    \"regionId\": \"us-west-1\",\r\n    \"cloudType\": \"aws\",\r\n    \"resourceApiName\": \"aws-s3api-get-bucket-acl\",\r\n    \"name\": \"dassana-bucket-with-website\",\r\n    \"additionalInfo\": {},\r\n    \"id\": \"dassana-bucket-with-website\",\r\n    \"region\": \"AWS Virginia\",\r\n    \"account\": \"P Personal\",\r\n    \"resourceType\": \"STORAGE_BUCKET\"\r\n  },\r\n  \"firstSeen\": 1629947769576,\r\n  \"alertRemediationCliDescription\": null,\r\n  \"resourceName\": \"dassana-bucket-with-website\",\r\n  \"alertDismissalNote\": null,\r\n  \"resourceRegion\": \"AWS Virginia\",\r\n  \"tags\": [\r\n    {\r\n      \"value\": \"prod\",\r\n      \"key\": \"env\"\r\n    }\r\n  ],\r\n  \"policyDescription\": \"This policy identifies the S3 Bucket(s) which will allow any unauthenticated user to GET objects from a bucket. These permissions permit anyone, malicious or not, to GET objects from your S3 bucket if they can guess the namespace. Since the S3 service does not protect the namespace other than with ACLs and Bucket Policy, you risk loss or compromise of critical data by leaving this open.\",\r\n  \"policyRecommendation\": \"1. Log into your AWS console and select the S3 service.\\n2. Choose the reported bucket.\\n3. Click Properties in the upper right of the window, and expand the 'Permissions' object.\\n4. Select 'Edit Bucket Policy' and consider defining what explicit 'Principal' should have the ability to GET objects in your S3 bucket. You may also want to specifically limit the 'Principal' ability to perform specific GET functions, without the wild card.\",\r\n  \"accountId\": \"536600094836\",\r\n  \"lastSeen\": 1631764964198,\r\n  \"policyId\": \"f0235acc-737d-4a54-8d2c-a05da32663bd\",\r\n  \"resourceCloudService\": \"Amazon S3\",\r\n  \"alertTs\": 1629947769576,\r\n  \"policyType\": \"config\",\r\n  \"findingSummary\": {},\r\n  \"resourceType\": \"Managed Storage Bucket\",\r\n  \"alertRuleId\": \"bd4c60d0-ed86-4b3f-9074-a98d62a9e740\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Input Parameters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const apiResponse = pm.response.json();",
+									"pm.test(\"Include Input Request Parameter works\", function() {",
+									"    //Check if alert keys were included along with dassana output",
+									"    pm.expect(Object.keys(apiResponse).length).to.be.above(1);",
+									"})",
+									"",
+									"const dassanaResponse = apiResponse.dassana;",
+									"pm.test(\"Include Step Output Parameter works\", function() {",
+									"    pm.expect(dassanaResponse[\"general-context\"]).to.have.property(\"step-output\");",
+									"    pm.expect(dassanaResponse[\"resource-context\"]).to.have.property(\"step-output\");",
+									"    pm.expect(dassanaResponse[\"policy-context\"]).to.have.property(\"step-output\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"alertStatus\": \"open\",\n  \"reason\": \"SCHEDULED\",\n  \"resourceId\": \"dassana-bucket-with-website\",\n  \"alertRuleName\": \"PC to Dassana to Splunk\",\n  \"alertRemediationImpact\": null,\n  \"accountName\": \"P Personal\",\n  \"hasFinding\": false,\n  \"resourceRegionId\": \"us-west-1\",\n  \"alertRemediationCli\": null,\n  \"source\": \"Prisma Cloud\",\n  \"cloudType\": \"aws\",\n  \"complianceMetadata\": [\n    {\n      \"requirementName\": \"Collection\",\n      \"standardName\": \"MITRE ATT&CK v6.3\",\n      \"requirementId\": \"TA0009\"\n    },\n    {\n      \"requirementName\": \"Principle 1 - Accountability\",\n      \"standardName\": \"PIPEDA\",\n      \"requirementId\": \"4.1\"\n    },\n    {\n      \"requirementName\": \"Technology Operations Management\",\n      \"standardName\": \"Risk Management in Technology (RMiT)\",\n      \"requirementId\": \"10\"\n    },\n    {\n      \"requirementName\": \"California Civil Code Section 1798.150\",\n      \"standardName\": \"CCPA 2018\",\n      \"requirementId\": \"1798.150\"\n    },\n    {\n      \"requirementName\": \"ACCESS CONTROL\",\n      \"standardName\": \"NIST 800-53 Rev 5\",\n      \"requirementId\": \"AC\"\n    }\n  ],\n  \"callbackUrl\": \"https://app2.prismacloud.io/alerts/overview?filters#alert.id[0]=P-1695&timeRange[type]=to_now&timeRange[value]=epoch\",\n  \"alertId\": \"P-1695\",\n  \"policyLabels\": [],\n  \"alertAttribution\": {},\n  \"severity\": \"high\",\n  \"policyName\": \"AWS S3 Bucket has Global GET Permissions enabled via bucket policy\",\n  \"resource\": {\n    \"data\": {\n      \"owner\": {\n        \"displayName\": \"gk+parthaws\",\n        \"id\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\"\n      },\n      \"tags\": [\n        {\n          \"value\": \"prod\",\n          \"key\": \"env\"\n        }\n      ],\n      \"bucketName\": \"dassana-bucket-with-website\",\n      \"denyUnencryptedUploadsPolicies\": [],\n      \"accountLevelPublicAccessBlockConfiguration\": {\n        \"blockPublicPolicy\": false,\n        \"restrictPublicBuckets\": false,\n        \"blockPublicAcls\": false,\n        \"ignorePublicAcls\": false\n      },\n      \"acl\": {\n        \"owner\": {\n          \"displayName\": \"gk+parthaws\",\n          \"id\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\"\n        },\n        \"grants\": [\n          {\n            \"grantee\": {\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\n              \"displayName\": \"gk+parthaws\",\n              \"typeIdentifier\": \"id\"\n            },\n            \"permission\": \"FullControl\"\n          }\n        ],\n        \"grantsAsList\": [\n          {\n            \"grantee\": {\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\n              \"displayName\": \"gk+parthaws\",\n              \"typeIdentifier\": \"id\"\n            },\n            \"permission\": \"FullControl\"\n          }\n        ],\n        \"requesterCharged\": false\n      },\n      \"creationDate\": \"2021-08-26T17:20:25.000Z\",\n      \"policyStatus\": {\n        \"isPublic\": true\n      },\n      \"sseAlgorithm\": \"None\",\n      \"loggingConfiguration\": {\n        \"targetGrants\": [\n          {\n            \"grantee\": {\n              \"identifier\": \"97042e15a6ef94fc6ebc1f124101cc6c8284bb85f4d32ecbd6d943bed1884811\",\n              \"displayName\": \"gk+parthaws\",\n              \"typeIdentifier\": \"id\"\n            },\n            \"permission\": \"FullControl\"\n          }\n        ]\n      },\n      \"policyAvailable\": true,\n      \"accountId\": \"536600094836\",\n      \"websiteConfiguration\": {\n        \"indexDocumentSuffix\": \"index.html\",\n        \"routingRules\": []\n      },\n      \"versioningConfiguration\": {\n        \"status\": \"Off\"\n      },\n      \"kmsMasterKeyID\": \"None\",\n      \"policy\": {\n        \"Version\": \"2012-10-17\",\n        \"Statement\": [\n          {\n            \"Action\": [\n              \"s3:GetObject\",\n              \"s3:GetObjectVersion\"\n            ],\n            \"Resource\": \"arn:aws:s3:::dassana-blog-static-site/*\",\n            \"Effect\": \"Allow\",\n            \"Principal\": \"*\",\n            \"Sid\": \"PublicRead\"\n          }\n        ]\n      }\n    },\n    \"resourceTs\": 1631758402352,\n    \"url\": \"https://console.aws.amazon.com/s3/buckets/dassana-blog-static-site/?region=us-east-1#\",\n    \"rrn\": \"rrn::storageBucket:us-east-1:461092258297::dassana-blog-static-site\",\n    \"cloudAccountGroups\": [\n      \"Test\"\n    ],\n    \"accountId\": \"536600094836\",\n    \"resourceTags\": {\n      \"env\": \"dev\"\n    },\n    \"regionId\": \"us-west-1\",\n    \"cloudType\": \"aws\",\n    \"resourceApiName\": \"aws-s3api-get-bucket-acl\",\n    \"name\": \"dassana-bucket-with-website\",\n    \"additionalInfo\": {},\n    \"id\": \"dassana-bucket-with-website\",\n    \"region\": \"AWS Virginia\",\n    \"account\": \"P Personal\",\n    \"resourceType\": \"STORAGE_BUCKET\"\n  },\n  \"firstSeen\": 1629947769576,\n  \"alertRemediationCliDescription\": null,\n  \"resourceName\": \"dassana-bucket-with-website\",\n  \"alertDismissalNote\": null,\n  \"resourceRegion\": \"AWS Virginia\",\n  \"tags\": [\n    {\n      \"value\": \"prod\",\n      \"key\": \"env\"\n    }\n  ],\n  \"policyDescription\": \"This policy identifies the S3 Bucket(s) which will allow any unauthenticated user to GET objects from a bucket. These permissions permit anyone, malicious or not, to GET objects from your S3 bucket if they can guess the namespace. Since the S3 service does not protect the namespace other than with ACLs and Bucket Policy, you risk loss or compromise of critical data by leaving this open.\",\n  \"policyRecommendation\": \"1. Log into your AWS console and select the S3 service.\\n2. Choose the reported bucket.\\n3. Click Properties in the upper right of the window, and expand the 'Permissions' object.\\n4. Select 'Edit Bucket Policy' and consider defining what explicit 'Principal' should have the ability to GET objects in your S3 bucket. You may also want to specifically limit the 'Principal' ability to perform specific GET functions, without the wild card.\",\n  \"accountId\": \"536600094836\",\n  \"lastSeen\": 1631764964198,\n  \"policyId\": \"f0235acc-737d-4a54-8d2c-a05da32663bd\",\n  \"resourceCloudService\": \"Amazon S3\",\n  \"alertTs\": 1629947769576,\n  \"policyType\": \"config\",\n  \"findingSummary\": {},\n  \"resourceType\": \"Managed Storage Bucket\",\n  \"alertRuleId\": \"bd4c60d0-ed86-4b3f-9074-a98d62a9e740\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=true&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "true"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Run Input (Valid JSON)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const apiResponse = pm.response.json().dassana;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Error is accurate\", function() {",
+									"    pm.expect(apiResponse.severity).to.eql(\"WARN\");",
+									"    pm.expect(apiResponse.msg).to.include(\"normalize\");",
+									"})",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"some-random-alert-key\": \"some-random-alert-value\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Run Cross-Account role Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const apiResponse = pm.response.json().dassana;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Bucket has associated website\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Cross Account Role couldn't be assumed on target account\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"SchemaVersion\": \"2018-10-08\",\n  \"Id\": \"arn:aws:securityhub:us-east-1:536600094845:subscription/aws-foundational-security-best-practices/v/1.0.0/EC2.2/finding/0291288e-e92d-4513-a1c9-ab5f6f442f10\",\n  \"ProductArn\": \"arn:aws:securityhub:us-east-1::product/aws/securityhub\",\n  \"ProductName\": \"Security Hub\",\n  \"CompanyName\": \"AWS\",\n  \"Region\": \"us-east-1\",\n  \"GeneratorId\": \"aws-foundational-security-best-practices/v/1.0.0/EC2.2\",\n  \"AwsAccountId\": \"536600094845\",\n  \"Types\": [\n    \"Software and Configuration Checks/Industry and Regulatory Standards/AWS-Foundational-Security-Best-Practices\"\n  ],\n  \"FirstObservedAt\": \"2021-11-18T00:38:04.145Z\",\n  \"LastObservedAt\": \"2021-12-02T07:37:15.911Z\",\n  \"CreatedAt\": \"2021-11-18T00:38:04.145Z\",\n  \"UpdatedAt\": \"2021-12-02T07:37:10.466Z\",\n  \"Severity\": {\n    \"Product\": 70,\n    \"Label\": \"HIGH\",\n    \"Normalized\": 70,\n    \"Original\": \"HIGH\"\n  },\n  \"Title\": \"EC2.2 The VPC default security group should not allow inbound and outbound traffic\",\n  \"Description\": \"This AWS control checks that the default security group of a VPC does not allow inbound or outbound traffic.\",\n  \"Remediation\": {\n    \"Recommendation\": {\n      \"Text\": \"For directions on how to fix this issue, consult the AWS Security Hub Foundational Security Best Practices documentation.\",\n      \"Url\": \"https://docs.aws.amazon.com/console/securityhub/EC2.2/remediation\"\n    }\n  },\n  \"ProductFields\": {\n    \"StandardsArn\": \"arn:aws:securityhub:::standards/aws-foundational-security-best-practices/v/1.0.0\",\n    \"StandardsSubscriptionArn\": \"arn:aws:securityhub:us-east-1:536600094845:subscription/aws-foundational-security-best-practices/v/1.0.0\",\n    \"ControlId\": \"EC2.2\",\n    \"RecommendationUrl\": \"https://docs.aws.amazon.com/console/securityhub/EC2.2/remediation\",\n    \"RelatedAWSResources:0/name\": \"securityhub-vpc-default-security-group-closed-bf44eab7\",\n    \"RelatedAWSResources:0/type\": \"AWS::Config::ConfigRule\",\n    \"StandardsControlArn\": \"arn:aws:securityhub:us-east-1:536600094845:control/aws-foundational-security-best-practices/v/1.0.0/EC2.2\",\n    \"aws/securityhub/ProductName\": \"Security Hub\",\n    \"aws/securityhub/CompanyName\": \"AWS\",\n    \"Resources:0/Id\": \"arn:aws:ec2:us-east-1:536600094845:security-group/sg-03917d50b27a592a1\",\n    \"aws/securityhub/FindingId\": \"arn:aws:securityhub:us-east-1::product/aws/securityhub/arn:aws:securityhub:us-east-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/EC2.2/finding/0291288e-e92d-4513-a1c9-ab5f6f442f10\"\n  },\n  \"UserDefinedFields\": {\n    \"DASSANA_CONTEXT_RISK\": \"low\",\n    \"DASSANA_NORMALIZE_WORKFLOW_ID\": \"security-hub\",\n    \"DASSANA_ALERT_PATH\": \"s3://dassaan-2-dassanabucket-1n8r3c56yxlvs/2021/11/18/security-hub/arn:aws:securityhub:us-east-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/EC2.2/finding/0291288e-e92d-4513-a1c9-ab5f6f442f10\",\n    \"DASSANA_RESOURCE_RISK\": \"\",\n    \"DASSANA_CONTEXT_WORKFLOW_ID\": \"ssh-from-internet\",\n    \"DASSANA_RESOURCE_RISK_RULE_NAME\": \"\",\n    \"DASSANA_CONTEXT_RISK_RULE_NAME\": \"are-enis-attached-to-sg\"\n  },\n  \"Resources\": [\n    {\n      \"Type\": \"AwsEc2SecurityGroup\",\n      \"Id\": \"arn:aws:ec2:us-east-1:536600094845:security-group/sg-03917d50b27a592a1\",\n      \"Partition\": \"aws\",\n      \"Region\": \"us-east-1\",\n      \"Details\": {\n        \"AwsEc2SecurityGroup\": {\n          \"GroupName\": \"default\",\n          \"GroupId\": \"sg-03917d50b27a592a1\",\n          \"OwnerId\": \"536600094845\",\n          \"VpcId\": \"vpc-0667efee3351564be\",\n          \"IpPermissions\": [\n            {\n              \"IpProtocol\": \"-1\",\n              \"UserIdGroupPairs\": [\n                {\n                  \"GroupId\": \"sg-03917d50b27a592a1\",\n                  \"UserId\": \"536600094845\"\n                }\n              ]\n            }\n          ],\n          \"IpPermissionsEgress\": [\n            {\n              \"IpProtocol\": \"-1\",\n              \"IpRanges\": [\n                {\n                  \"CidrIp\": \"0.0.0.0/0\"\n                }\n              ]\n            }\n          ]\n        }\n      }\n    }\n  ],\n  \"Compliance\": {\n    \"Status\": \"FAILED\"\n  },\n  \"WorkflowState\": \"NEW\",\n  \"Workflow\": {\n    \"Status\": \"NEW\"\n  },\n  \"RecordState\": \"ACTIVE\",\n  \"FindingProviderFields\": {\n    \"Severity\": {\n      \"Label\": \"HIGH\",\n      \"Original\": \"HIGH\"\n    },\n    \"Types\": [\n      \"Software and Configuration Checks/Industry and Regulatory Standards/AWS-Foundational-Security-Best-Practices\"\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Run Input (Invalid JSON)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const apiResponse = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message is accurate\", function() {",
+									"    pm.expect(apiResponse.severity).to.eql(\"ERROR\");",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"malformaed-json-key\": \"malformed-alert-value",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AWS Config Security Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const apiResponse = pm.response.json().dassana;",
+									"const alertClassification = apiResponse.normalize.output.alertClassification;",
+									"",
+									"pm.test(\"Alert classified correctly\", function() {",
+									"    pm.expect(alertClassification.subclass).to.eql(\"config\");",
+									"    pm.expect(alertClassification.category).to.eql(\"networking\");",
+									"    pm.expect(alertClassification.subcategory).to.eql(\"firewall\");",
+									"    pm.expect(alertClassification.class).to.eql(\"risk\");",
+									"})",
+									"",
+									"function eni_action_deep_search(steps) {",
+									"    for(i = 0; i < steps.length; i++) {",
+									"        var stepOutput = Object.keys(steps[i])[0]",
+									"        if(stepOutput == 'list-of-attached-eni') {",
+									"            if(steps[i]['list-of-attached-eni']['result'].length > 0) {",
+									"                return true",
+									"            }",
+									"        }",
+									"    }",
+									"    return false",
+									"}",
+									"",
+									"pm.test(\"Attached ENI Action ran correctly\", function() {",
+									"    pm.expect(eni_action_deep_search(apiResponse['policy-context']['step-output'])).to.eql(true)",
+									"})",
+									"",
+									"pm.test(\"Policy Context Risk set correctly\", function() {",
+									"    pm.expect(apiResponse['policy-context']['risk']['riskValue']).to.eql('high')",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"SchemaVersion\": \"2018-10-08\",\n  \"Id\": \"arn:aws:securityhub:us-east-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/EC2.18/finding/1be6c89a-f11d-4a00-ae28-10a16380bd85\",\n  \"ProductArn\": \"arn:aws:securityhub:us-east-1::product/aws/securityhub\",\n  \"ProductName\": \"Security Hub\",\n  \"CompanyName\": \"AWS\",\n  \"Region\": \"us-east-1\",\n  \"GeneratorId\": \"aws-foundational-security-best-practices/v/1.0.0/EC2.18\",\n  \"AwsAccountId\": \"536600094836\",\n  \"Types\": [\n    \"Software and Configuration Checks/Industry and Regulatory Standards/AWS-Foundational-Security-Best-Practices\"\n  ],\n  \"FirstObservedAt\": \"2021-11-26T05:21:44.301Z\",\n  \"LastObservedAt\": \"2021-11-27T01:37:02.857Z\",\n  \"CreatedAt\": \"2021-11-26T05:21:44.301Z\",\n  \"UpdatedAt\": \"2021-11-27T01:36:58.517Z\",\n  \"Severity\": {\n    \"Product\": 70,\n    \"Label\": \"HIGH\",\n    \"Normalized\": 70,\n    \"Original\": \"HIGH\"\n  },\n  \"Title\": \"EC2.18 Security groups should only allow unrestricted incoming traffic for authorized ports\",\n  \"Description\": \"This control checks whether the security groups allow unrestricted incoming traffic. The control fails if ports allow unrestricted traffic on ports other than 80 and 443, which are default values for parameter authorizedTcpPorts.\",\n  \"Remediation\": {\n    \"Recommendation\": {\n      \"Text\": \"For directions on how to fix this issue, consult the AWS Security Hub Foundational Security Best Practices documentation.\",\n      \"Url\": \"https://docs.aws.amazon.com/console/securityhub/EC2.18/remediation\"\n    }\n  },\n  \"ProductFields\": {\n    \"StandardsArn\": \"arn:aws:securityhub:::standards/aws-foundational-security-best-practices/v/1.0.0\",\n    \"StandardsSubscriptionArn\": \"arn:aws:securityhub:us-east-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0\",\n    \"ControlId\": \"EC2.18\",\n    \"RecommendationUrl\": \"https://docs.aws.amazon.com/console/securityhub/EC2.18/remediation\",\n    \"RelatedAWSResources:0/name\": \"securityhub-vpc-sg-open-only-to-authorized-ports-df5d7820\",\n    \"RelatedAWSResources:0/type\": \"AWS::Config::ConfigRule\",\n    \"StandardsControlArn\": \"arn:aws:securityhub:us-east-1:536600094836:control/aws-foundational-security-best-practices/v/1.0.0/EC2.18\",\n    \"aws/securityhub/ProductName\": \"Security Hub\",\n    \"aws/securityhub/CompanyName\": \"AWS\",\n    \"aws/securityhub/annotation\": \"No tcp ['22'] port is authorized to be open, according to authorizedTcpPorts values ['80,443'] parameter.\",\n    \"Resources:0/Id\": \"arn:aws:ec2:us-east-1:536600094836:security-group/sg-078a4a71c2a7f2e42\",\n    \"aws/securityhub/FindingId\": \"arn:aws:securityhub:us-east-1::product/aws/securityhub/arn:aws:securityhub:us-east-1:536600094836:subscription/aws-foundational-security-best-practices/v/1.0.0/EC2.18/finding/1be6c89a-f11d-4a00-ae28-10a16380bd85\"\n  },\n  \"Resources\": [\n    {\n      \"Type\": \"AwsEc2SecurityGroup\",\n      \"Id\": \"arn:aws:ec2:us-east-1:536600094836:security-group/sg-078a4a71c2a7f2e42\",\n      \"Partition\": \"aws\",\n      \"Region\": \"us-east-1\",\n      \"Details\": {\n        \"AwsEc2SecurityGroup\": {\n          \"GroupName\": \"launch-wizard-1\",\n          \"GroupId\": \"sg-078a4a71c2a7f2e42\",\n          \"OwnerId\": \"536600094836\",\n          \"VpcId\": \"vpc-0667efee3351564be\",\n          \"IpPermissions\": [\n            {\n              \"IpProtocol\": \"tcp\",\n              \"FromPort\": 22,\n              \"ToPort\": 22,\n              \"IpRanges\": [\n                {\n                  \"CidrIp\": \"0.0.0.0/0\"\n                }\n              ]\n            }\n          ],\n          \"IpPermissionsEgress\": [\n            {\n              \"IpProtocol\": \"-1\",\n              \"IpRanges\": [\n                {\n                  \"CidrIp\": \"0.0.0.0/0\"\n                }\n              ]\n            }\n          ]\n        }\n      }\n    }\n  ],\n  \"Compliance\": {\n    \"Status\": \"FAILED\"\n  },\n  \"WorkflowState\": \"NEW\",\n  \"Workflow\": {\n    \"Status\": \"NEW\"\n  },\n  \"RecordState\": \"ACTIVE\",\n  \"FindingProviderFields\": {\n    \"Severity\": {\n      \"Label\": \"HIGH\",\n      \"Original\": \"HIGH\"\n    },\n    \"Types\": [\n      \"Software and Configuration Checks/Industry and Regulatory Standards/AWS-Foundational-Security-Best-Practices\"\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/run?includeInputRequest=false&includeStepOutput=true",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"run"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								},
+								{
+									"key": "includeStepOutput",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Workflows",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const api_url = pm.collectionVariables.get(\"api-gateway-url\");",
+									"const api_key = pm.collectionVariables.get(\"dassana-api-key\");",
+									"",
+									"var workflowWasUpdated = false;",
+									"// Initial Update Workflow by ID succeeded",
+									"pm.test(\"Update workflow succeeded\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    if(pm.response.to.have.status(200)) {",
+									"        workflowWasUpdated = true;",
+									"    }",
+									"});",
+									"",
+									"if (workflowWasUpdated) {",
+									"    const getWorkflowOptions = {",
+									"        url: api_url + '/workflows?workflowId=general-context-demo-cloud',",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'x-api-key': api_key",
+									"        }",
+									"    };",
+									"",
+									"    setTimeout(function(){",
+									"",
+									"    pm.sendRequest(getWorkflowOptions, (error, response) => {",
+									"        if (error) {",
+									"            console.log(error);",
+									"        } else {",
+									"            var resString = new Buffer.from(response.stream).toString()",
+									"            // Workflow update succeeded",
+									"            pm.test(\"Get workflow retrieved updated workflow\", function () {",
+									"                pm.expect(resString).to.include(\"[UPDATED-IN-QA]\");",
+									"            });",
+									"        }",
+									"    });",
+									"",
+									"",
+									"    const deleteWorkflowOptions = {",
+									"        url: api_url + '/workflows?workflowId=general-context-demo-cloud',",
+									"        method: 'DELETE',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'x-api-key': api_key",
+									"        }",
+									"    };",
+									"    setTimeout(function(){",
+									"    pm.sendRequest(deleteWorkflowOptions, (error, response) => {",
+									"        if (error) {",
+									"            console.log(error);",
+									"        } else {",
+									"            pm.sendRequest(getWorkflowOptions, (error, response) => {",
+									"            if (error) {",
+									"                console.log(error);",
+									"            } else {",
+									"                var resString = new Buffer.from(response.stream).toString()",
+									"                // Workflow delete succeeded",
+									"                pm.test(\"Delete workflow succeeded\", function () {",
+									"                    pm.expect(resString).to.not.include(\"[UPDATED-IN-QA]\");",
+									"                });",
+									"            }",
+									"            });",
+									"        }   ",
+									"    });",
+									"    }, [30*1000]); //Provide ample time to ensure worflow update was propogated/saved",
+									"",
+									"    }, [30*1000]); //Provide ample time to ensure worflow delete was propogated/saved",
+									"",
+									"} ",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true,
+							"accept-encoding": true,
+							"accept": true,
+							"user-agent": true,
+							"host": true,
+							"content-length": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-yaml",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "1619",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the x-api-key header generated by Postman.",
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg",
+								"type": "text"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "# [UPDATED-IN-QA]\n# This is just a SAMPLE file \n\n# general context workflows such as this one are executed only after normalization has been done\n# all of the fields such as csp,service etc emitted by normalization workflow are available.\n\nschema: 1\ntype: general-context\n\nid: general-context-demo-cloud\nname: for demo cloud, risk of \"demo-service\" is low\n\ncsp: demo-cloud # note that this value is not used by engine for filtering.\n#currently, it is being used to rendering content on https://contexthub.dassana.io/\n\nfilters:\n  - match-type: all\n    rules:\n      - .csp == \"demo-csp\" and .service == \"demo-service\"\n\n#this workflow being a demo workflow doesn't have steps. In general, you will have steps that take the input and output something meaningful\n#for example, refer to https://github.com/dassana-io/dassana/blob/main/content/workflows/csp/aws/general-context/general-context.yaml\n\nrisk-config:\n  default-risk: \"\" # we recommend that you set the default risk to be empty\n  rules:\n    - id: low-risk-for-demo-service-in-real-world-you-will-refer-to-steps-output\n      condition: .service | contains (\"demo-service\") # jq expression which must return a true or false output\n      risk: low # valid values are low, medium, high and critical\n\noutput:\n  - name: why-is-6-afraid-of-7\n    value: \"because 7 ate 9\"\n    value-type: STRING # the field value-type is optional with the default value of JQ. This is a demo workflow so we are not extracting anyting from steps using jq, so we are using STRING which simply puts the value in the JSON key\n  - name: test-output\n    value: \"I don't know what is going on\"\n    value-type: STRING",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?includeInputRequest=false",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Update Workflow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message is correct\", function () {",
+									"    pm.expect(pm.response.json().severity).to.eql(\"ERROR\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true,
+							"accept-encoding": true,
+							"accept": true,
+							"user-agent": true,
+							"host": true,
+							"content-length": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-yaml",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "1619",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the x-api-key header generated by Postman.",
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg",
+								"type": "text"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "# This is just a SAMPLE file \n\n# general context workflows such as this one are executed only after normalization has been done\n# all of the fields such as csp,service etc emitted by normalization workflow are available.\n\n# schema: 1\ntype: general-context\n\nid: general-context-demo-cloud-asdf-random-test\nname: for demo cloud, risk of \"demo-service\" is low\n\ncsp: demo-cloud # note that this value is not used by engine for filtering.\n#currently, it is being used to rendering content on https://contexthub.dassana.io/\n\nfilters:\n  - match-type: all\n    rules:\n      - .csp == \"demo-csp\" and .service == \"demo-service\"\n\n#this workflow being a demo workflow doesn't have steps. In general, you will have steps that take the input and output something meaningful\n#for example, refer to https://github.com/dassana-io/dassana/blob/main/content/workflows/csp/aws/general-context/general-context.yaml\n\nrisk-config:\n  default-risk: \"\" # we recommend that you set the default risk to be empty\n  rules:\n    - id: low-risk-for-demo-service-in-real-world-you-will-refer-to-steps-output\n      condition: .service | contains (\"demo-service\") # jq expression which must return a true or false output\n      risk: low # valid values are low, medium, high and critical\n\noutput:\n  - name: why-is-6-afraid-of-7\n    value: \"because 7 ate 9\"\n    value-type: STRING # the field value-type is optional with the default value of JQ. This is a demo workflow so we are not extracting anyting from steps using jq, so we are using STRING which simply puts the value in the JSON key\n  - name: test-output\n    value: \"I don't know what is going on\"\n    value-type: STRING",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?includeInputRequest=false",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "includeInputRequest",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Get Workflow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"connection": true,
+							"accept-encoding": true,
+							"accept": true,
+							"user-agent": true,
+							"host": true,
+							"content-length": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-yaml",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "1619",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the x-api-key header generated by Postman.",
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg",
+								"type": "text"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?workflowId=random-does-not-exist",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "workflowId",
+									"value": "random-does-not-exist"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Delete Workflow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true,
+							"accept-encoding": true,
+							"accept": true,
+							"user-agent": true,
+							"host": true,
+							"content-length": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-yaml",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "vw1iwqwqgf.execute-api.us-east-1.amazonaws.com",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://editor.dassana.io",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://editor.dassana.io/",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "1619",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the x-api-key header generated by Postman.",
+								"key": "x-api-key",
+								"value": "7TtxVlHJJs37MkMO4O90r1A2mXdoVekN2iP0SKCg",
+								"type": "text"
+							},
+							{
+								"key": "x-dassana-cache",
+								"value": "false",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway-url}}/workflows?workflowId=random-does-not-exist",
+							"host": [
+								"{{api-gateway-url}}"
+							],
+							"path": [
+								"workflows"
+							],
+							"query": [
+								{
+									"key": "workflowId",
+									"value": "random-does-not-exist"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -435,3 +1719,4 @@
 		}
 	]
 }
+
