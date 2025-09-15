@@ -18,9 +18,18 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
-      - name: Build with Maven
-        run: |
-          cd engine
-          mvn --no-transfer-progress --batch-mode test jacoco:report coveralls:report -X
+          
+      - name: Test & generate JaCoCo XML
+        working-directory: engine
+        run: mvn --no-transfer-progress --batch-mode -q clean test jacoco:report
+      
+      - name: Upload coverage with Coveralls Universal Reporter (no-fail)
+        working-directory: engine
         env:
-          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        run: |
+          curl -sSL https://coveralls.io/coveralls-linux.tar.gz | tar -xz
+          ./coveralls report \
+            --file target/site/jacoco/jacoco.xml \
+            --git-token "${GITHUB_TOKEN:-}" \
+            --no-fail
