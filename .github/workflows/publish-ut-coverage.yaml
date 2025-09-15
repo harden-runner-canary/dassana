@@ -30,5 +30,4 @@ jobs:
         run: |
           curl -sSL https://coveralls.io/coveralls-linux.tar.gz | tar -xz
           ./coveralls report \
-            --file target/site/jacoco/jacoco.xml \
-            --no-fail
+            --file target/site/jacoco/jacoco.xml 
