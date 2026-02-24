@@ -21,6 +21,6 @@ jobs:
       - name: Build with Maven
         run: |
           cd engine
-          mvn --no-transfer-progress --batch-mode test jacoco:report coveralls:report
+          mvn --no-transfer-progress --batch-mode test jacoco:report 
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
