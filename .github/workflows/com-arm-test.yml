@@ -24,7 +24,7 @@ jobs:
   test2:
     permissions:
       contents: read
-    runs-on: ubuntu-26
+    runs-on: ubuntu-26.04
     steps:
 
       - uses: h0x0er/harden-runner@jatin/agent-comm-0170-2
