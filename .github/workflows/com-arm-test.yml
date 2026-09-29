@@ -20,3 +20,21 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
+
+  test2:
+    permissions:
+      contents: read
+    runs-on: ubuntu-26
+    steps:
+
+      - uses: h0x0er/harden-runner@jatin/agent-comm-0170-2
+        with:
+          egress-policy: audit
+      
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
