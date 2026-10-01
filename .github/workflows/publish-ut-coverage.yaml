@@ -46,7 +46,6 @@ jobs:
           distribution: temurin
           java-version: "11"
           architecture: aarch64
-          cache: maven
   
       - name: Verify Java architecture
         run: |
