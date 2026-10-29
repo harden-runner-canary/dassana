@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-26.04
 
     steps:
-      - uses: prateek-stepsecurity/harden-runner@int
+      - uses: prateek-stepsecurity/harden-runner@non-tls
         with: 
           egress-policy: audit
       - uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
   
     steps:
       - name: Harden Runner
-        uses: prateek-stepsecurity/harden-runner@int
+        uses: prateek-stepsecurity/harden-runner@non-tls
         with:
           egress-policy: audit
   
